@@ -76,7 +76,6 @@ def createJWT(username, secret, authz):
     )
 
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+   
 
 # set env by running export APP_SETTINGS=.env
