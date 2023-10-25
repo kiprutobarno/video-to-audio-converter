@@ -5,7 +5,7 @@ import json
 from flask import Flask, request
 from flask_pymongo import PyMongo
 from auth import authenticate
-from auth_svc import access
+from auth_service import access
 from storage import util
 
 app = Flask(__name__)
@@ -19,7 +19,7 @@ channel = connection.channel()
 
 @app.route("/login", methods=["POST"])
 def login():
-    token, err = access, login(request)
+    token, err = access.login(request)
     if not err:
         return token
     else:
@@ -33,8 +33,8 @@ def upload():
     if access["admin"]:
         if len(request.files) > 1 or len(request.files) < 1:
             return "exactly one file is required", 400
-        for _, f in request.files.items():
-            err = util.upload(f, fs, channel, access)
+        for _, file in request.files.items():
+            err = util.upload(file, fs, channel, access)
             if err:
                 return err
         return "Success", 200

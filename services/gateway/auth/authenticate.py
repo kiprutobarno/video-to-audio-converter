@@ -9,7 +9,7 @@ def token(request):
     if not token:
         return None, ("missing credentials", 401)
     response = requests.post(
-        f"http://{os.environ.get('AUTH_SVC_ADDRESS')}/authenticate",
+        f"http://{os.environ.get('AUTH_SERVICE_ADDRESS')}/authenticate",
         headers={"Authorization": token},
     )
     if response.status_code == 200:

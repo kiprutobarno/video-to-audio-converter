@@ -1,5 +1,5 @@
 import jwt
-import datetime
+from datetime import datetime, timedelta, timezone
 from flask import Flask, request
 from flask_mysqldb import MySQL
 from os import environ
@@ -66,9 +66,8 @@ def createJWT(username, secret, authz):
     return jwt.encode(
         {
             "username": username,
-            "exp": datetime.datetime.now(tz=datetime.timezone.utc)
-            + datetime.timedelta(days=1),
-            "iat": datetime.datetime.now(datetime.UTC),
+            "exp": datetime.now(tz=timezone.utc) + timedelta(days=1),
+            "iat": datetime.utcnow(),
             "admin": authz,
         },
         secret,
@@ -76,6 +75,5 @@ def createJWT(username, secret, authz):
     )
 
 
-   
-
-# set env by running export APP_SETTINGS=.env
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8080, debug=True)
